@@ -25,7 +25,6 @@ jobs:
       run: echo "${{ secrets.CLIENT_PRIVATE_KEY }}" > client.key
     - name: Create client.auth from OPENVPN_CLIENT_CREDENTIAL secret
       run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > client.auth
-    
     - name: Replace REMOTE_IP_ADDRESS variable
       run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.conf > client.conf
     - name: Connection OpenVPN
