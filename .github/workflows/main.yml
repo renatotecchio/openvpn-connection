@@ -1,0 +1,50 @@
+name: Deploy Raspberry Cluster
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+env:
+  OPENVPN_DIR: openvpn
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Apt Update
+      run: sudo apt update
+    - name: Install OpenVPN
+      run: sudo apt install openvpn
+    - name: Install Ansible
+      run: sudo apt install ansible
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+    - name: Create ca.crt from CA_CERTIFICATE secret
+      run: echo "${{ secrets.CA_CERTIFICATE }}" > $OPENVPN_DIR/ca.crt
+    - name: Create client.crt from CLIENT_CERTIFICATE secret
+      run: echo "${{ secrets.CLIENT_CERTIFICATE }}" > $OPENVPN_DIR/client.crt
+    - name: Create client.key from CLIENT_PRIVATE_KEY secret
+      run: echo "${{ secrets.CLIENT_PRIVATE_KEY }}" > $OPENVPN_DIR/client.key
+    - name: Create client.auth from OPENVPN_CLIENT_CREDENTIAL secret
+      run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > $OPENVPN_DIR/client.auth
+    
+    - name: Replace REMOTE_IP_ADDRESS variable
+      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' openvpn/template.conf > openvpn/client.conf
+    - name: Connection OpenVPN
+      run: |
+        cd openvpn
+        sudo openvpn --config client.conf&
+    
+
+    - name: Run Ansible Playbook
+      run: |
+        ifconfig
+    
+    #- name: Upload
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: ca.crt
+    #    path: openvpn/ca.crt
