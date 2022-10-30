@@ -1,13 +1,8 @@
-name: Deploy Raspberry Cluster
+name: Deploy OpenVPN
 
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
     branches: [ "*" ]
-
-env:
-  OPENVPN_DIR: ""
 
 jobs:
   build:
@@ -23,28 +18,15 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Create ca.crt from CA_CERTIFICATE secret
-      run: echo "${{ secrets.CA_CERTIFICATE }}" > $OPENVPN_DIR/ca.crt
+      run: echo "${{ secrets.CA_CERTIFICATE }}" > ca.crt
     - name: Create client.crt from CLIENT_CERTIFICATE secret
-      run: echo "${{ secrets.CLIENT_CERTIFICATE }}" > $OPENVPN_DIR/client.crt
+      run: echo "${{ secrets.CLIENT_CERTIFICATE }}" > client.crt
     - name: Create client.key from CLIENT_PRIVATE_KEY secret
-      run: echo "${{ secrets.CLIENT_PRIVATE_KEY }}" > $OPENVPN_DIR/client.key
+      run: echo "${{ secrets.CLIENT_PRIVATE_KEY }}" > client.key
     - name: Create client.auth from OPENVPN_CLIENT_CREDENTIAL secret
-      run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > $OPENVPN_DIR/client.auth
+      run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > client.auth
     
     - name: Replace REMOTE_IP_ADDRESS variable
-      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' $OPENVPN_DIR/client_template.conf > $OPENVPN_DIR/client.conf
+      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.conf > client.conf
     - name: Connection OpenVPN
-      run: |
-        #cd openvpn
-        sudo openvpn --config client.conf&
-    
-
-    - name: Run Ansible Playbook
-      run: |
-        ifconfig
-    
-    #- name: Upload
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: ca.crt
-    #    path: openvpn/ca.crt
+      run: sudo openvpn --config client.conf&
