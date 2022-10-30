@@ -7,7 +7,7 @@ on:
     branches: [ "*" ]
 
 env:
-  OPENVPN_DIR: openvpn
+  OPENVPN_DIR: ""
 
 jobs:
   build:
@@ -32,10 +32,10 @@ jobs:
       run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > $OPENVPN_DIR/client.auth
     
     - name: Replace REMOTE_IP_ADDRESS variable
-      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' openvpn/template.conf > openvpn/client.conf
+      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' $OPENVPN_DIR/client_template.conf > $OPENVPN_DIR/client.conf
     - name: Connection OpenVPN
       run: |
-        cd openvpn
+        #cd openvpn
         sudo openvpn --config client.conf&
     
 

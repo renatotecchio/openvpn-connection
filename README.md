@@ -1,1 +1,11 @@
-# mikrotik_openvpn
+# Mikrotik Openvpn
+
+## Secrets need to work:
+
+```
+CA_CERTIFICATE
+CLIENT_CERTIFICATE
+CLIENT_PRIVATE_KEY
+OPENVPN_CLIENT_CREDENTIAL
+REMOTE_IP_ADDRESS
+```
