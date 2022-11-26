@@ -30,3 +30,7 @@ Note: Make sure port 1194 is open and forwarded to Mikrotik in scenarios where M
 ![Network Diagram](/docs/Network%20Diagram.drawio.png)
 
 
+
+
+
+
