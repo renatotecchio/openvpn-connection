@@ -27,5 +27,6 @@ jobs:
       run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.conf > client.conf
     - name: Connection OpenVPN
       run: sudo openvpn --config client.conf&
-
+    - name: date
+      run: date
       
