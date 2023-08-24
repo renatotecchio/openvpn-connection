@@ -1,4 +1,4 @@
-# Mikrotik OpenVPN
+# OpenVPN Connection
 ## Objective
 Secure remote connection on Mikrotik using OpenVPN.
 
