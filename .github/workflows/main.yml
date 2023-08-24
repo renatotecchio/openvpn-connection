@@ -7,7 +7,12 @@ on:
   schedule:
   - cron: "*/1 * * * *"
 
-
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Run tests on branch'
+        required: true
+        default: 'main'
 
 jobs:
   build:
