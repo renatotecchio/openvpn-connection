@@ -1,4 +1,4 @@
-name: Connection OpenVPN
+name: OpenVPN Connection - Test
 
 on:
   # pull_request:
@@ -38,8 +38,6 @@ jobs:
     - name: Connection OpenVPN
       run: |
         sudo openvpn --config client.conf
-        sleep 20s #found the best solution for this
-        echo $? 
-    - name: date
-      run: date
+        ./script/checkovpn.sh 
+
       
