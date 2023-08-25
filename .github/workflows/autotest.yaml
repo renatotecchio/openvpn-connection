@@ -1,9 +1,15 @@
-name: OpenVPN Connection - Test
+name: OpenVPN Connection - AutoTest
 
 on:
-  pull_request:
-    branches: [ "*" ]
-
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Run tests on branch'
+        required: true
+        default: 'main'
+  schedule:
+  - cron: "0 6 * * *"
+          
 jobs:
   build:
     name: Build
@@ -29,4 +35,3 @@ jobs:
       run: |
         sudo openvpn --config client.conf&
         ./script/checkovpn.sh
-        
