@@ -1,4 +1,4 @@
-name: OpenVPN Connection - Test
+name: OpenVPN Connection
 
 on:
   pull_request:
@@ -29,4 +29,3 @@ jobs:
       run: |
         sudo openvpn --config client.conf&
         ./script/checkovpn.sh
-        

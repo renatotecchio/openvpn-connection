@@ -1,12 +1,12 @@
 name: OpenVPN Connection - AutoTest
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Run tests on branch'
-        required: true
-        default: 'main'
+  # workflow_dispatch:
+  #   inputs:
+  #     branch:
+  #       description: 'Run tests on branch'
+  #       required: true
+  #       default: 'main'
   schedule:
   - cron: "0 6 * * *"
           
