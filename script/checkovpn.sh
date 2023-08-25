@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -ev
+# set -ev
+set -x
 
 timeout=30
 tun0_return=""
