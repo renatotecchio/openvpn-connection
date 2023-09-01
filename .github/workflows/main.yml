@@ -30,5 +30,5 @@ jobs:
         
     - name: Connection OpenVPN
       run: |
-        sudo openvpn --config client.conf&
+        sudo openvpn --config client.ovpn&
         ./script/checkovpn.sh
