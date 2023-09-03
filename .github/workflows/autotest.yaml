@@ -8,30 +8,29 @@ on:
   #       required: true
   #       default: 'main'
   schedule:
-  - cron: "0 18 * * *"
+  - cron: "10 17 * * *"
           
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Apt Update
-      run: sudo apt update
-    - name: Install OpenVPN
-      run: sudo apt install openvpn
+      
     - name: Checkout Repo
       uses: actions/checkout@v3
-    - name: Create ca.crt from CA_CERTIFICATE secret
-      run: echo "${{ secrets.CA_CERTIFICATE }}" > ca.crt
-    - name: Create client.crt from CLIENT_CERTIFICATE secret
-      run: echo "${{ secrets.CLIENT_CERTIFICATE }}" > client.crt
-    - name: Create client.key from CLIENT_PRIVATE_KEY secret
-      run: echo "${{ secrets.CLIENT_PRIVATE_KEY }}" > client.key
-    - name: Create client.auth from OPENVPN_CLIENT_CREDENTIAL secret
-      run: echo "${{ secrets.OPENVPN_CLIENT_CREDENTIAL }}" > client.auth
-    - name: Replace REMOTE_IP_ADDRESS variable
-      run: sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.conf > client.conf
+
+    - name: Install OpenVPN
+      run: |
+        sudo apt update
+        sudo apt install openvpn
+    
+    - name: Add certificates to client OVPN file and create client auth file
+      run: |
+        sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.ovpn > client.ovpn
+        echo "${{ secrets.OVPN_CERTIFICATES }}" >> client.ovpn
+        echo "${{ secrets.OPEN_CLIENT_CREDENTIAL }}" > client.auth
+        
     - name: Connection OpenVPN
       run: |
-        sudo openvpn --config client.conf&
+        sudo openvpn --config client.ovpn&
         ./script/checkovpn.sh
