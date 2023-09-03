@@ -3,21 +3,38 @@
 Secure remote connection on Mikrotik using OpenVPN.
 
 ## Settings
-Installation and configuration of OpenVPN service on Mikrotik using RouteOS. (still missing)
+Installation and configuration of OpenVPN service on Mikrotik using RouteOS. (still missing these steps)
 Installing and configuring the OpenVPN client.
 
 ## Secrets need to work:
 The secrets below must be created in the repository at Setting/Secrets/Action
 
 ```
-CA_CERTIFICATE
-CLIENT_CERTIFICATE
-CLIENT_PRIVATE_KEY
-OPENVPN_CLIENT_CREDENTIAL
+OVPN_CERTIFICATES
+OVPN_CLIENT_CREDENTIAL
 REMOTE_IP_ADDRESS
 ```
-The values of the `CA_CERTIFICATE`, `CLIENT_CERTIFICATE` and `CLIENT_PRIVATE_KEY` secrets are obtained through the configuration of the OpenVPN service on Mikrotik.
-The value of the `OPENVPN_CLIENT_CREDENTIAL` secret must be entered as follows:
+The value of the `OVPN_CERTIFICATES` secrets are obtained through the configuration of the OpenVPN service on Mikrotik.
+The secret must be:
+```
+<ca>
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+</ca>
+<cert>
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+</cert>
+<key>
+-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----
+</key>
+```
+
+The value of the `OVPN_CLIENT_CREDENTIAL` secret must be entered as follows:
 
 ```
 username
