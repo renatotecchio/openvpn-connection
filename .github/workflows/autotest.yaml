@@ -8,7 +8,7 @@ on:
   #       required: true
   #       default: 'main'
   schedule:
-  - cron: "10 17 * * *"
+  - cron: "00 18 * * *"
           
 jobs:
   build:
