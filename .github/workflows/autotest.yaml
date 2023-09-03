@@ -28,7 +28,7 @@ jobs:
       run: |
         sed 's/REMOTE_IP_ADDRESS/${{ secrets.REMOTE_IP_ADDRESS }}/' client_template.ovpn > client.ovpn
         echo "${{ secrets.OVPN_CERTIFICATES }}" >> client.ovpn
-        echo "${{ secrets.OPEN_CLIENT_CREDENTIAL }}" > client.auth
+        echo "${{ secrets.OVPN_CLIENT_CREDENTIAL }}" > client.auth
         
     - name: Connection OpenVPN
       run: |
